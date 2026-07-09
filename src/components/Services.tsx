@@ -105,14 +105,14 @@ const itemAnim = {
 
 export default function Services() {
   return (
-    <section id="services" className="py-24 md:py-32 px-6">
+    <section id="services" className="py-16 md:py-24 lg:py-32 px-6">
       <div className="mx-auto max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="text-center mb-16"
+          className="text-center mb-10 md:mb-16"
         >
           <p className="text-sm uppercase tracking-[0.25em] text-stone-400 mb-4">What We Do</p>
           <h2 className="font-serif text-4xl md:text-5xl text-stone-900">Services & Pricing</h2>
@@ -122,7 +122,7 @@ export default function Services() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: '-100px' }}
-          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
         >
           {categories.map((s) => (
             <motion.div
@@ -138,7 +138,7 @@ export default function Services() {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
-              <div className="p-6 md:p-8">
+              <div className="p-5 md:p-8">
                 <div className="flex items-center gap-3 mb-3">
                   <span className="text-stone-600">{s.icon}</span>
                   <h3 className="font-serif text-2xl text-stone-900">{s.title}</h3>

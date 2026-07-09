@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <footer id="contact" className="bg-stone-900 text-white">
       <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

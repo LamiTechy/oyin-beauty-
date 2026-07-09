@@ -22,7 +22,7 @@ export default function Testimonials() {
   }, [])
 
   return (
-    <section id="testimonials" className="py-24 md:py-32 px-6 bg-stone-900 text-white">
+    <section id="testimonials" className="py-16 md:py-24 lg:py-32 px-6 bg-stone-900 text-white">
       <div className="mx-auto max-w-3xl text-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -31,7 +31,7 @@ export default function Testimonials() {
           transition={{ duration: 0.7 }}
         >
           <p className="text-sm uppercase tracking-[0.25em] text-white/50 mb-4">Testimonials</p>
-          <h2 className="font-serif text-4xl md:text-5xl mb-16">What Clients Say</h2>
+          <h2 className="font-serif text-4xl md:text-5xl mb-10 md:mb-16">What Clients Say</h2>
         </motion.div>
         <div className="relative h-48 md:h-40">
           <AnimatePresence mode="wait">

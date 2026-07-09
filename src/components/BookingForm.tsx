@@ -101,7 +101,7 @@ export default function BookingForm() {
   }
 
   return (
-    <div className="bg-[#faf7f2] rounded-3xl p-8 md:p-12 shadow-sm">
+    <div className="bg-[#faf7f2] rounded-3xl p-5 sm:p-8 md:p-12 shadow-sm">
       {/* Steps indicator */}
       <div className="flex justify-center gap-2 mb-10">
         {(['service', 'date', 'time', 'details'] as Step[]).map((s, i) => (
@@ -141,7 +141,7 @@ export default function BookingForm() {
                           <p className="font-medium text-stone-900 text-sm">{s.name}</p>
                           <p className="text-xs text-stone-400">{s.duration} min</p>
                         </div>
-                        <span className="font-medium text-stone-900">${s.price}</span>
+                        <span className="font-medium text-stone-900">₦{(s.price / 100).toLocaleString()}</span>
                       </button>
                     ))}
                   </div>
@@ -172,7 +172,7 @@ export default function BookingForm() {
             {slots.length === 0 ? (
               <p className="text-center text-stone-400">No available slots for this date.</p>
             ) : (
-              <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {slots.map((s) => (
                   <button
                     key={s}

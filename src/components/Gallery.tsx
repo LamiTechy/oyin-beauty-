@@ -25,19 +25,19 @@ const images = [
 
 export default function Gallery() {
   return (
-    <section id="gallery" className="py-24 md:py-32 px-6 bg-white">
+    <section id="gallery" className="py-16 md:py-24 lg:py-32 px-6 bg-white">
       <div className="mx-auto max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="text-center mb-12"
+          className="text-center mb-8 md:mb-12"
         >
           <p className="text-sm uppercase tracking-[0.25em] text-stone-400 mb-4">Portfolio</p>
           <h2 className="font-serif text-4xl md:text-5xl text-stone-900">Our Work</h2>
         </motion.div>
-        <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
+        <div className="columns-1 sm:columns-2 lg:columns-3 gap-3 md:gap-4 space-y-3 md:space-y-4">
           {images.map((src, i) => (
             <motion.div
               key={src}

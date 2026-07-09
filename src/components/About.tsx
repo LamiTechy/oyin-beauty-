@@ -13,14 +13,14 @@ const team = [
 
 export default function About() {
   return (
-    <section id="about" className="py-24 md:py-32 px-6 bg-[#faf7f2]">
+    <section id="about" className="py-16 md:py-24 lg:py-32 px-6 bg-[#faf7f2]">
       <div className="mx-auto max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="text-center mb-16"
+          className="text-center mb-10 md:mb-16"
         >
           <p className="text-sm uppercase tracking-[0.25em] text-stone-400 mb-4">The Studio</p>
           <h2 className="font-serif text-4xl md:text-5xl text-stone-900">Meet the Team</h2>
