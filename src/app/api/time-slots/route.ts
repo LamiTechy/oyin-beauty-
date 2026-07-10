@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/db'
 import { bookings, studioHours } from '@/db/schema'
-import { eq, and, gte, lte } from 'drizzle-orm'
-import { addMinutes, format, parse, setHours, setMinutes } from 'date-fns'
+import { eq } from 'drizzle-orm'
+import { addMinutes, format, parse, isSameDay, startOfDay } from 'date-fns'
 
 const SLOT_DURATION = 60
 
@@ -27,15 +27,20 @@ export async function GET(request: NextRequest) {
 
   const existingTimes = new Set(existing.map((b) => b.time))
 
-  const open = parse(hours.openTime, 'HH:mm', new Date())
-  const close = parse(hours.closeTime, 'HH:mm', new Date())
+  const open = parse(hours.openTime, 'HH:mm:ss', new Date())
+  const close = parse(hours.closeTime, 'HH:mm:ss', new Date())
 
   const slots: string[] = []
   let current = open
+  const now = new Date()
+  const isToday = isSameDay(new Date(date), now)
+
   while (current < close) {
     const formatted = format(current, 'HH:mm')
     if (!existingTimes.has(formatted)) {
-      slots.push(formatted)
+      if (!isToday || current > now) {
+        slots.push(formatted)
+      }
     }
     current = addMinutes(current, SLOT_DURATION)
   }

@@ -12,7 +12,7 @@ export const services = pgTable('services', {
 
 export const bookings = pgTable('bookings', {
   id: serial('id').primaryKey(),
-  serviceId: integer('service_id').references(() => services.id).notNull(),
+  serviceRequest: text('service_request').notNull(),
   date: text('date').notNull(),
   time: text('time').notNull(),
   clientName: text('client_name').notNull(),

@@ -1,44 +1,22 @@
-S C:\Users\olayi\Documents\booking> npm run dev
-
-> booking@0.1.0 dev
-> next dev --webpack
-
-▲ Next.js 16.2.10 (webpack)
-- Local:         http://localhost:3000
-- Network:       http://172.20.10.5:3000
-- Environments: .env
-✓ Ready in 1772ms
-⚠ Attempted to load @next/swc-win32-x64-msvc, but an error occurred: \\?\C:\Users\olayi\Documents\booking\node_modules\@next\swc-win32-x64-msvc\next-swc.win32-x64-msvc.node is not a valid Win32 application.
-\\?\C:\Users\olayi\Documents\booking\node_modules\@next\swc-win32-x64-msvc\next-swc.win32-x64-msvc.node
-⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
- We detected multiple lockfiles and selected the directory of C:\Users\olayi\package-lock.json as the root directory.
- To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
-   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.
- Detected additional lockfiles: 
-   * C:\Users\olayi\Documents\booking\package-lock.json
-
-  Skipping creating a lockfile at C:\Users\olayi\Documents\booking\.next\dev\lock because we're using WASM bindings
-
-○ Compiling / ...
- GET / 200 in 25.4s (next.js: 21.8s, application-code: 3.5s)
- GET / 200 in 324ms (next.js: 143ms, application-code: 180ms)
-⨯ Error: Failed query: select "id", "category", "name", "price", "duration", "description", "image" from "services"
-params: 
-    at async GET (src\app\api\services\route.ts:6:15)
-  4 |
-  5 | export async function GET() {
-> 6 |   const all = await db.select().from(services)
-    |               ^
-  7 |   return NextResponse.json(all)
-  8 | }
-  9 | {
-  query: 'select "id", "category", "name", "price", "duration", "description", "image" from "services"',
-  params: [],
-  [cause]: ErrorEvent {
-    type: 'error',
-    defaultPrevented: false,
-    cancelable: false,
-    timeStamp: 64126.3602
-  }
+GET / 500 in 226ms (next.js: 123ms, application-code: 103ms)
+[browser] Uncaught Error: ENOENT: no such file or directory, open 'C:\Users\olayi\Documents\booking\.next\dev\server\app\page.js'
+⨯ Error: ENOENT: no such file or directory, open 'C:\Users\olayi\Documents\booking\.next\dev\server\app\page.js'
+    at ignore-listed frames {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\olayi\\Documents\\booking\\.next\\dev\\server\\app\\page.js',
+  page: '/'
 }
- GET /api/services 500 in 14.0s (next.js: 3.0s, application-code: 11.0s)
+ GET / 500 in 97ms (next.js: 68ms, application-code: 29ms)
+[browser] Uncaught Error: ENOENT: no such file or directory, open 'C:\Users\olayi\Documents\booking\.next\dev\server\app\page.js'
+⨯ Error: ENOENT: no such file or directory, open 'C:\Users\olayi\Documents\booking\.next\dev\server\app\page.js'
+    at ignore-listed frames {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\olayi\\Documents\\booking\\.next\\dev\\server\\app\\page.js',
+  page: '/'
+}
+ GET / 500 in 107ms (next.js: 85ms, application-code: 22ms)
+[browser] Uncaught Error: ENOENT: no such file or directory, open 'C:\Users\olayi\Documents\booking\.next\dev\server\app\page.js'

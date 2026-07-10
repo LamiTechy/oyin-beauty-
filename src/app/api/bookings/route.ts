@@ -10,7 +10,7 @@ export async function GET() {
 export async function POST(request: Request) {
   const body = await request.json()
   const booking = await db.insert(bookings).values({
-    serviceId: body.serviceId,
+    serviceRequest: body.serviceRequest,
     date: body.date,
     time: body.time,
     clientName: body.clientName,

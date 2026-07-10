@@ -3,13 +3,11 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-type Service = { id: number; category: string; name: string; price: number; duration: number }
-type Step = 'service' | 'date' | 'time' | 'details' | 'confirm'
+type Step = 'service' | 'date' | 'time' | 'details'
 
 export default function BookingForm() {
   const [step, setStep] = useState<Step>('service')
-  const [services, setServices] = useState<Service[]>([])
-  const [selectedService, setSelectedService] = useState<Service | null>(null)
+  const [serviceRequest, setServiceRequest] = useState('')
   const [date, setDate] = useState('')
   const [time, setTime] = useState('')
   const [slots, setSlots] = useState<string[]>([])
@@ -22,12 +20,6 @@ export default function BookingForm() {
   const [error, setError] = useState('')
 
   useEffect(() => {
-    fetch('/api/services')
-      .then((r) => r.json())
-      .then(setServices)
-  }, [])
-
-  useEffect(() => {
     if (date) {
       fetch(`/api/time-slots?date=${date}`)
         .then((r) => r.json())
@@ -37,17 +29,10 @@ export default function BookingForm() {
     }
   }, [date])
 
-  const categories = [...new Set(services.map((s) => s.category))]
-
-  const grouped = categories.map((cat) => ({
-    category: cat,
-    items: services.filter((s) => s.category === cat),
-  }))
-
   const minDate = new Date().toISOString().split('T')[0]
 
   const handleSubmit = async () => {
-    if (!selectedService || !date || !time || !name || !email) return
+    if (!serviceRequest.trim() || !date || !time || !name.trim() || !email.trim()) return
     setLoading(true)
     setError('')
     try {
@@ -55,13 +40,13 @@ export default function BookingForm() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          serviceId: selectedService.id,
+          serviceRequest: serviceRequest.trim(),
           date,
           time,
-          clientName: name,
-          clientEmail: email,
-          clientPhone: phone,
-          notes,
+          clientName: name.trim(),
+          clientEmail: email.trim(),
+          clientPhone: phone || null,
+          notes: notes || null,
         }),
       })
       if (!res.ok) throw new Error('Booking failed')
@@ -75,10 +60,10 @@ export default function BookingForm() {
 
   const canGoNext = () => {
     switch (step) {
-      case 'service': return !!selectedService
+      case 'service': return serviceRequest.trim().length > 0
       case 'date': return !!date
       case 'time': return !!time
-      case 'details': return name.trim() && email.trim()
+      case 'details': return name.trim().length > 0 && email.trim().length > 0
       default: return true
     }
   }
@@ -93,7 +78,7 @@ export default function BookingForm() {
         <div className="w-16 h-16 rounded-full bg-stone-900 text-white flex items-center justify-center mx-auto mb-6 text-2xl">✓</div>
         <h3 className="font-serif text-2xl text-stone-900 mb-2">You&apos;re booked!</h3>
         <p className="text-stone-500 mb-2">
-          {selectedService?.name} on {date} at {time}
+          {serviceRequest} on {date} at {time}
         </p>
         <p className="text-stone-400 text-sm">We&apos;ll send a confirmation to {email}</p>
       </motion.div>
@@ -102,7 +87,6 @@ export default function BookingForm() {
 
   return (
     <div className="bg-[#faf7f2] rounded-3xl p-5 sm:p-8 md:p-12 shadow-sm">
-      {/* Steps indicator */}
       <div className="flex justify-center gap-2 mb-10">
         {(['service', 'date', 'time', 'details'] as Step[]).map((s, i) => (
           <div key={s} className="flex items-center gap-2">
@@ -121,40 +105,22 @@ export default function BookingForm() {
       <AnimatePresence mode="wait">
         {step === 'service' && (
           <motion.div key="service" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
-            <h3 className="font-serif text-2xl text-stone-900 text-center mb-8">Choose a Service</h3>
-            <div className="space-y-6">
-              {grouped.map((g) => (
-                <div key={g.category}>
-                  <p className="text-sm uppercase tracking-wider text-stone-400 mb-3">{g.category}</p>
-                  <div className="space-y-2">
-                    {g.items.map((s) => (
-                      <button
-                        key={s.id}
-                        onClick={() => { setSelectedService(s); setStep('date') }}
-                        className={`w-full flex justify-between items-center p-4 rounded-xl border text-left transition-all ${
-                          selectedService?.id === s.id
-                            ? 'border-stone-900 bg-white shadow-sm'
-                            : 'border-stone-200 bg-white hover:border-stone-300'
-                        }`}
-                      >
-                        <div>
-                          <p className="font-medium text-stone-900 text-sm">{s.name}</p>
-                          <p className="text-xs text-stone-400">{s.duration} min</p>
-                        </div>
-                        <span className="font-medium text-stone-900">₦{(s.price / 100).toLocaleString()}</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
+            <h3 className="font-serif text-2xl text-stone-900 text-center mb-2">What service do you need?</h3>
+            <p className="text-sm text-stone-400 text-center mb-8">Tell us what you&apos;re looking for</p>
+            <textarea
+              value={serviceRequest}
+              onChange={(e) => setServiceRequest(e.target.value)}
+              placeholder="e.g. Box braids, Bridal makeup, Wig installation..."
+              rows={3}
+              className="w-full rounded-xl border border-stone-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300 resize-none"
+            />
           </motion.div>
         )}
 
         {step === 'date' && (
           <motion.div key="date" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
             <h3 className="font-serif text-2xl text-stone-900 text-center mb-2">Pick a Date</h3>
-            <p className="text-sm text-stone-400 text-center mb-8">{selectedService?.name}</p>
+            <p className="text-sm text-stone-400 text-center mb-8">{serviceRequest}</p>
             <input
               type="date"
               value={date}
@@ -194,12 +160,12 @@ export default function BookingForm() {
         {step === 'details' && (
           <motion.div key="details" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
             <h3 className="font-serif text-2xl text-stone-900 text-center mb-2">Your Details</h3>
-            <p className="text-sm text-stone-400 text-center mb-8">{selectedService?.name} &middot; {date} at {time}</p>
+            <p className="text-sm text-stone-400 text-center mb-8">{serviceRequest} &middot; {date} at {time}</p>
             <div className="max-w-md mx-auto space-y-4">
               <input type="text" placeholder="Full Name" value={name} onChange={(e) => setName(e.target.value)} required className="w-full rounded-xl border border-stone-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
               <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required className="w-full rounded-xl border border-stone-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
               <input type="tel" placeholder="Phone (optional)" value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full rounded-xl border border-stone-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
-              <textarea placeholder="Notes (optional)" value={notes} onChange={(e) => setNotes(e.target.value)} rows={3} className="w-full rounded-xl border border-stone-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
+              <textarea placeholder="Additional notes (optional)" value={notes} onChange={(e) => setNotes(e.target.value)} rows={3} className="w-full rounded-xl border border-stone-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300 resize-none" />
             </div>
           </motion.div>
         )}
@@ -207,12 +173,11 @@ export default function BookingForm() {
 
       {error && <p className="text-red-500 text-sm text-center mt-4">{error}</p>}
 
-      {/* Navigation buttons */}
       <div className="flex justify-between mt-8 max-w-md mx-auto">
         {step !== 'service' ? (
           <button
             onClick={() => {
-              const prev: Record<Step, Step> = { service: 'service', date: 'service', time: 'date', details: 'time', confirm: 'details' }
+              const prev: Record<Step, Step> = { service: 'service', date: 'service', time: 'date', details: 'time' }
               setStep(prev[step])
             }}
             className="text-sm text-stone-500 hover:text-stone-900 transition-colors"
@@ -224,7 +189,7 @@ export default function BookingForm() {
         {step !== 'details' ? (
           <button
             onClick={() => {
-              const next: Record<Step, Step> = { service: 'date', date: 'time', time: 'details', details: 'confirm', confirm: 'confirm' }
+              const next: Record<Step, Step> = { service: 'date', date: 'time', time: 'details', details: 'details' }
               if (canGoNext()) setStep(next[step])
             }}
             disabled={!canGoNext()}

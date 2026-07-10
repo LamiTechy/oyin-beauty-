@@ -32,7 +32,7 @@ const seedHours = [
   { dayOfWeek: 4, openTime: '09:00', closeTime: '19:00' },
   { dayOfWeek: 5, openTime: '09:00', closeTime: '19:00' },
   { dayOfWeek: 6, openTime: '09:00', closeTime: '18:00' },
-  { dayOfWeek: 0, openTime: '00:00', closeTime: '00:00', isClosed: true },
+  { dayOfWeek: 0, openTime: '10:00', closeTime: '16:00' },
 ]
 
 async function seed() {

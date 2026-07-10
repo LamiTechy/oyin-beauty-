@@ -7,7 +7,7 @@ const team = [
     name: 'Oyin Ola',
     role: 'Founder & CEO',
     specialties: 'Braiding, wig installation, makeup',
-    image: 'https://images.unsplash.com/photo-1487412912498-0447578fcca8?q=80&w=400&auto=format&fit=crop',
+    image: '/ceo.jpeg',
   },
 ]
 

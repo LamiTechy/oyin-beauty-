@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 
 type Booking = {
   id: number
-  serviceId: number
+  serviceRequest: string
   date: string
   time: string
   clientName: string
@@ -15,30 +15,18 @@ type Booking = {
   createdAt: string
 }
 
-type Service = {
-  id: number
-  name: string
-  category: string
-  price: number
-}
-
 export default function AdminPage() {
   const [password, setPassword] = useState('')
   const [authed, setAuthed] = useState(false)
   const [bookings, setBookings] = useState<Booking[]>([])
-  const [services, setServices] = useState<Service[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     if (!authed) return
-    Promise.all([
-      fetch('/api/bookings').then((r) => r.json()),
-      fetch('/api/services').then((r) => r.json()),
-    ]).then(([b, s]) => {
-      setBookings(b)
-      setServices(s)
-      setLoading(false)
-    })
+    fetch('/api/bookings')
+      .then((r) => r.json())
+      .then(setBookings)
+      .finally(() => setLoading(false))
   }, [authed])
 
   const handleLogin = () => {
@@ -48,8 +36,6 @@ export default function AdminPage() {
       alert('Wrong password')
     }
   }
-
-  const getServiceName = (id: number) => services.find((s) => s.id === id)?.name ?? `Service #${id}`
 
   if (!authed) {
     return (
@@ -101,7 +87,7 @@ export default function AdminPage() {
               <thead>
                 <tr className="border-b border-stone-200 text-left text-stone-500 uppercase tracking-wider text-xs">
                   <th className="p-4 font-medium">Client</th>
-                  <th className="p-4 font-medium">Service</th>
+                  <th className="p-4 font-medium">Service Request</th>
                   <th className="p-4 font-medium">Date</th>
                   <th className="p-4 font-medium">Time</th>
                   <th className="p-4 font-medium">Contact</th>
@@ -113,7 +99,7 @@ export default function AdminPage() {
                 {bookings.map((b) => (
                   <tr key={b.id} className="border-b border-stone-100 hover:bg-stone-50 transition-colors">
                     <td className="p-4 font-medium text-stone-900">{b.clientName}</td>
-                    <td className="p-4 text-stone-700">{getServiceName(b.serviceId)}</td>
+                    <td className="p-4 text-stone-700">{b.serviceRequest}</td>
                     <td className="p-4 text-stone-700">{b.date}</td>
                     <td className="p-4 text-stone-700">{b.time}</td>
                     <td className="p-4 text-stone-700">

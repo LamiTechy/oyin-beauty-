@@ -14,12 +14,12 @@ const categories = [
       </svg>
     ),
     items: [
-      { name: 'Box Braids', price: '₦15,000' },
-      { name: 'Cornrows', price: '₦10,000' },
-      { name: 'Knotless Braids', price: '₦20,000' },
-      { name: 'Faux Locs', price: '₦25,000' },
+      { name: 'Box Braids' },
+      { name: 'Cornrows' },
+      { name: 'Knotless Braids' },
+      { name: 'Faux Locs' },
     ],
-    image: 'https://images.unsplash.com/photo-1560869713-7d0a29430803?q=80&w=600&auto=format&fit=crop',
+    image: '/braiding.jpeg',
   },
   {
     title: 'Makeup',
@@ -31,12 +31,12 @@ const categories = [
       </svg>
     ),
     items: [
-      { name: 'Everyday Glam', price: '₦10,000' },
-      { name: 'Bridal Package', price: '₦35,000' },
-      { name: 'Editorial Look', price: '₦20,000' },
-      { name: 'Lash Extensions', price: '₦8,000' },
+      { name: 'Everyday Glam' },
+      { name: 'Bridal Package' },
+      { name: 'Editorial Look' },
+      { name: 'Lash Extensions' },
     ],
-    image: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=600&auto=format&fit=crop',
+    image: '/makeup.jpg',
   },
   {
     title: 'Wig',
@@ -49,10 +49,10 @@ const categories = [
       </svg>
     ),
     items: [
-      { name: 'Wig Installation', price: '₦12,000' },
-      { name: 'Wig Revamping', price: '₦18,000' },
-      { name: 'Custom Wig Making', price: '₦40,000' },
-      { name: 'Wig Styling & Cut', price: '₦8,000' },
+      { name: 'Wig Installation' },
+      { name: 'Wig Revamping' },
+      { name: 'Custom Wig Making' },
+      { name: 'Wig Styling & Cut' },
     ],
     image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=600&auto=format&fit=crop',
   },
@@ -67,12 +67,12 @@ const categories = [
       </svg>
     ),
     items: [
-      { name: 'Earlobe Piercing', price: '₦5,000' },
-      { name: 'Cartilage / Helix', price: '₦7,000' },
-      { name: 'Nostril', price: '₦8,000' },
-      { name: 'Navel Piercing', price: '₦10,000' },
+      { name: 'Earlobe Piercing' },
+      { name: 'Cartilage / Helix' },
+      { name: 'Nostril' },
+      { name: 'Navel Piercing' },
     ],
-    image: 'https://images.unsplash.com/photo-1606761568499-6d2451b23c66?q=80&w=600&auto=format&fit=crop',
+    image: '/piercing.jpg',
   },
   {
     title: 'Photoshoot',
@@ -84,12 +84,12 @@ const categories = [
       </svg>
     ),
     items: [
-      { name: 'MUA Portfolio Shoot', price: '₦30,000' },
-      { name: 'Styling Session', price: '₦25,000' },
-      { name: 'Event Coverage', price: '₦50,000' },
-      { name: 'Brand Content Shoot', price: '₦80,000' },
+      { name: 'MUA Portfolio Shoot' },
+      { name: 'Styling Session' },
+      { name: 'Event Coverage' },
+      { name: 'Brand Content Shoot' },
     ],
-    image: 'https://images.unsplash.com/photo-1487412912498-0447578fcca8?q=80&w=600&auto=format&fit=crop',
+    image: '/photo.jpeg',
   },
 ]
 
@@ -130,7 +130,7 @@ export default function Services() {
               variants={itemAnim}
               className="group rounded-2xl bg-white border border-stone-200/60 overflow-hidden shadow-sm hover:shadow-md transition-shadow"
             >
-              <div className="aspect-[4/3] overflow-hidden">
+              <div className="aspect-[5/6] overflow-hidden">
                 <img
                   src={s.image}
                   alt={s.title}
@@ -146,9 +146,8 @@ export default function Services() {
                 <p className="text-sm text-stone-500 mb-5">{s.tagline}</p>
                 <ul className="space-y-3">
                   {s.items.map((item) => (
-                    <li key={item.name} className="flex justify-between text-sm">
-                      <span className="text-stone-700">{item.name}</span>
-                      <span className="font-medium text-stone-900">{item.price}</span>
+                    <li key={item.name} className="text-sm text-stone-700">
+                      {item.name}
                     </li>
                   ))}
                 </ul>
